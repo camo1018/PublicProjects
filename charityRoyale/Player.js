@@ -1,3 +1,5 @@
+// Server Player
+
 var Player = function(startName, startThreshold) {
 	var name = startName,
 		threshold = startThreshold,

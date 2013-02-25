@@ -1,4 +1,4 @@
-// Server
+// Server Game
 
 var util = require("util"),
 	io = require("socket.io"),
@@ -95,8 +95,7 @@ function onRemovePlayer(data) {
 };
 
 function onFindGame() {
-	if (this.gameId >= 0) {
-		console.log("?");
+	if (gameId >= 0) {
 		this.emit("found game", {gameId: this.gameId});
 	}
 };

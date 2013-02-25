@@ -11,7 +11,7 @@ var Game1 = function(player, socket, canvas) {
 	function init() {
 		setEventHandlers();
 		socket.emit("game1 get item name");
-		alert("Heller?");
+		alert("Running Minigame 1");
 		ctx = canvas.getContext("2d");
 		ctx.font = "italic 50px Calibri";
 		ctx.fillText = ("Guess the Price!", 50, 50);

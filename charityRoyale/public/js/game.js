@@ -12,6 +12,7 @@ inputEntered,
 threshold,
 socket,
 isWaiting,
+hasGame, // Does the game client have a minigame to play?
 Game1;
 
 /**************************************************
@@ -21,6 +22,7 @@ function init() {
 	// Test Init
 	inputEntered = false;
 	isWaiting = true;
+	hasGame = false;
 
 	askForInput();
 	waitForInput();
@@ -81,11 +83,17 @@ function waitForPlayers() {
 		setTimeout(waitForPlayers, 100);
 	}
 	else {
-		console.log("?");
-		socket.emit("get game");
+		waitForGame();
 	}
 };
 
+function waitForGame() {
+	if (!hasGame) {
+		smoke.signal("Determining minigame...");
+		socket.emit("get game");
+		setTimeout(waitForGame, 100);
+	}
+}
 
 /**************************************************
  ** GAME EVENT HANDLERS
@@ -157,16 +165,14 @@ function onRemovePlayer(data) {
 
 function onFoundGame(data) {
 	var miniGame;
-
-	console.log("?");
 	
 	switch (data.gameId) {
-	case 1: miniGame = new Game1(localPlayer, socket, canvas); break;
+	case 1: miniGame = Game1(localPlayer, socket, canvas); break;
 	// And so on...
 	};
 	
-	miniGame.init();
-	
+	hasGame = true;
+	miniGame.init();	
 };
 
 function onDisplayLoser(data) {
