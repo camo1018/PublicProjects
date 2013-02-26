@@ -164,15 +164,13 @@ function onRemovePlayer(data) {
 };
 
 function onFoundGame(data) {
-	var miniGame;
-	
-	switch (data.gameId) {
-	case 1: miniGame = Game1(localPlayer, socket, canvas); break;
-	// And so on...
-	};
-	
-	hasGame = true;
-	miniGame.init();	
+	if (!hasGame) {
+		switch (data.gameId) {
+			case 1: alert("Calling game"); Game1Init(); break;
+		};
+
+		hasGame = true;
+	}
 };
 
 function onDisplayLoser(data) {

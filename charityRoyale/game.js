@@ -96,7 +96,7 @@ function onRemovePlayer(data) {
 
 function onFindGame() {
 	if (gameId >= 0) {
-		this.emit("found game", {gameId: this.gameId});
+		this.emit("found game", {gameId: gameId});
 	}
 };
 
