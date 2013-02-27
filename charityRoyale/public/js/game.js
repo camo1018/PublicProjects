@@ -171,7 +171,6 @@ function onFoundGame(data) {
 		}
 
 		hasGame = true;
-		alert(hasGame);
 	}
 };
 

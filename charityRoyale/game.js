@@ -2,9 +2,12 @@
 
 var util = require("util"),
 	io = require("socket.io"),
-	Player = require("./Player").Player,
-	Game1 = require("./minigames/Game1");
-var socket, players, waitingForPlayers, gameId;
+	Player = require("./Player").Player;
+
+var socket, waitingForPlayers, gameId;
+global.players = "lol";
+
+var Game1 = require("./minigames/Game1");
 
 function init() {
 	gameId = -1; // No game yet
@@ -61,7 +64,7 @@ function onSocketConnection(client) {
 	client.on("get waiting status", onGetWaitingStatus);
 	client.on("get game", onFindGame);
 	client.on("game1 submit", Game1.onSubmit);
-	client.on("game1 get item", Game1.onGetItemName);
+	client.on("game1 get item name", Game1.onGetItemName);
 };
 
 function onClientDisconnect() {
