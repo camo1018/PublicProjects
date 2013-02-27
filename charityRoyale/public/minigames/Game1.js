@@ -19,8 +19,8 @@
 		
 		ctx.fillText = (itemName, 50, 150);
 		
-		Game1askForInput();
-		Game1waitForInput();
+		Game1AskForInput();
+		Game1WaitForInput();
 	} 
 	
 	function Game1SetEventHandlers() {

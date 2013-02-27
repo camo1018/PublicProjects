@@ -1,6 +1,7 @@
 // Minigame 1 - Guess the Price
 // Server
-var Game1 = function(players, socket, server) {
+
+
 	var loserId;
 	var loserGuessDiff = 0;
 	var price;
@@ -8,20 +9,14 @@ var Game1 = function(players, socket, server) {
 	var itemName;
 	var intervalId;
 	
-	function init() {
+	exports.init = function()  {
 		// Debug
 		price = 100;
 		itemName = "Keagan";
-
-		setEventHandlers();
+		console.log("Game called");
 	};
 	
-	function setEventHandlers() {
-		socket.on("game1 submit", onSubmit);
-		socket.on("game1 get item name", onGetItemName);
-	};
-	
-	function onSubmit(data) {
+	exports.onSubmit = function() {
 		if (Math.abs(data.guess - price) > loserGuessDiff) {
 			loserId = data.pid; 
 		}
@@ -35,13 +30,6 @@ var Game1 = function(players, socket, server) {
 		}
 	};
 	
-	function onGetItemName() {
+	exports.onGetItemName = function() {
 		this.broadcast.emit("game1 set item name", {itemName: itemName});
-	}
-	
-	init();
-	
-	
-};
-
-exports.Game = Game1;
+	}		

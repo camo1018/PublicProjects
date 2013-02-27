@@ -3,8 +3,7 @@
 var util = require("util"),
 	io = require("socket.io"),
 	Player = require("./Player").Player,
-	Game1 = require("./minigames/Game1").Game;
-
+	Game1 = require("./minigames/Game1");
 var socket, players, waitingForPlayers, gameId;
 
 function init() {
@@ -39,8 +38,7 @@ function findGame() {
 	gameId = randomNum;
 	
 	switch (randomNum) {
-		case 1: miniGame = new Game1(players, socket); break;
-		case 2: miniGame = new Game2(players, socket); break;
+		case 1: Game1.init(); break;
 	// Continue on...
 	};
 	
@@ -62,6 +60,8 @@ function onSocketConnection(client) {
 	client.on("remove player", onRemovePlayer);
 	client.on("get waiting status", onGetWaitingStatus);
 	client.on("get game", onFindGame);
+	client.on("game1 submit", Game1.onSubmit);
+	client.on("game1 get item", Game1.onGetItemName);
 };
 
 function onClientDisconnect() {

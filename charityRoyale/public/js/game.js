@@ -166,10 +166,12 @@ function onRemovePlayer(data) {
 function onFoundGame(data) {
 	if (!hasGame) {
 		switch (data.gameId) {
-			case 1: alert("Calling game"); Game1Init(); break;
-		};
+			case 1: Game1Init(); break;
+			case 2: Game2Init(); break;
+		}
 
 		hasGame = true;
+		alert(hasGame);
 	}
 };
 
