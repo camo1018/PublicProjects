@@ -111,7 +111,6 @@ var setEventHandlers = function() {
 	socket.on("new player", onNewPlayer);
 	socket.on("remove player", onRemovePlayer);
 	socket.on("found game", onFoundGame);
-	socket.on("display loser", onDisplayLoser);
 	socket.on("waiting status", onGotWaitingStatus);
 };
 
@@ -174,14 +173,14 @@ function onFoundGame(data) {
 	}
 };
 
-function onDisplayLoser(data) {
-	var loser = playerById(data.loserId);
+function displayLoser(loserId) {
+	var loser = playerById(loserId);
 	
 	if (!loser) {
-		console.log("Loser not found: " + data.loserId);
+		console.log("Loser not found: " + loserId);
 	}
 	
-	smoke.signal(loser.getName() + " is the loser!");
+	smoke.signal(remotePlayers.indexOf(loser).getName() + " is the loser!");
 };
 
 function onGotWaitingStatus(data) {

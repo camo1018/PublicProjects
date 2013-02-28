@@ -1,15 +1,13 @@
 // Minigame 1 - Guess the Price
 // Client
- var ctx,
-	playerGuess,
+ var playerGuess,
 	hasGuessed,
-	itemName;
+	itemName = "";
 	
 	
 	function Game1Init() {
 		Game1SetEventHandlers();
 		socket.emit("game1 get item name");
-		ctx = canvas.getContext("2d");
 		ctx.font = "italic 50px Calibri";
 		ctx.fillText = ("Guess the Price!", 50, 50);
 		
@@ -18,7 +16,8 @@
 		
 		ctx.fillText = (itemName, 50, 150);
 		
-		Game1AskForInput();
+
+		Game1WaitForName();
 		Game1WaitForInput();
 	}; 
 	
@@ -28,12 +27,11 @@
 	};
 	
 	function Game1OnGetItemName(data) {
-		alert("Got Item Name");
 		itemName = data.itemName;
 	};
 	
 	function Game1OnResults(data) {
-		socket.sockets.emit("display loser", {loserId: data.loserId});
+		displayLoser(data.loserId);
 		
 		// End Game
 	};
@@ -50,6 +48,15 @@
 			}
 		});
 				
+	};
+
+	function Game1WaitForName() {
+		if (itemName == "") {
+			setTimeout(Game1WaitForName,100);
+		}
+		else {
+			Game1AskForInput();
+		}
 	};
 	
 	function Game1WaitForInput() {

@@ -5,7 +5,8 @@ var util = require("util"),
 	Player = require("./Player").Player;
 
 var socket, waitingForPlayers, gameId;
-global.players = "lol";
+global.players;
+global.main = this;
 
 var Game1 = require("./minigames/Game1");
 
