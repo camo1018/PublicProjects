@@ -7,6 +7,7 @@ var util = require("util"),
 var socket, waitingForPlayers, gameId;
 global.players;
 global.main = this;
+global.PLAYERCOUNT = 2;
 
 var Game1 = require("./minigames/Game1");
 
@@ -25,7 +26,7 @@ function init() {
 };
 
 function waitForPlayers() {
-	if (players.length < 1) {
+	if (players.length < PLAYERCOUNT) {
 		setTimeout(waitForPlayers, 100);
 	}
 	else {
@@ -66,15 +67,21 @@ function onSocketConnection(client) {
 	client.on("get game", onFindGame);
 	client.on("game1 submit", Game1.onSubmit);
 	client.on("game1 get item name", Game1.onGetItemName);
+	client.on("get players list", onGetPlayersList);
 };
 
 function onClientDisconnect() {
 	util.log("Player has disconnected: " + this.id);
 };
 
+function onGetPlayersList() {
+	this.emit("players list", {players:  players});
+};
+
 function onNewPlayer(data) {
 	var newPlayer = new Player(data.name, data.threshold);
 	newPlayer.id = this.id;
+	this.emit("assign player id", {pid: this.id});
 	
 	this.broadcast.emit("new player", {id: newPlayer.id, name: newPlayer.getName(), threshold: newPlayer.getThreshold()});
 	var i, existingPlayer;

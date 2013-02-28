@@ -63,7 +63,7 @@
 		if (!hasGuessed)
 			setTimeout(Game1WaitForInput,100);
 		else {
-			socket.emit("game1 submit", {guess: playerGuess});
+			socket.emit("game1 submit", {pid: localPlayer.id, guess: playerGuess});
 		}
 	};
 	

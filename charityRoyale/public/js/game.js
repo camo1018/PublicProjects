@@ -8,6 +8,7 @@ ctx,			// Canvas rendering context
 keys,			// Keyboard input
 localPlayer,	// Local player
 remotePlayers,
+players,
 inputEntered,
 threshold,
 socket,
@@ -83,6 +84,7 @@ function waitForPlayers() {
 		setTimeout(waitForPlayers, 100);
 	}
 	else {
+		socket.emit("get players list");
 		waitForGame();
 	}
 };
@@ -112,6 +114,16 @@ var setEventHandlers = function() {
 	socket.on("remove player", onRemovePlayer);
 	socket.on("found game", onFoundGame);
 	socket.on("waiting status", onGotWaitingStatus);
+	socket.on("players list", onPlayersList);
+	socket.on("assign player id", onAssignPlayerId);
+};
+
+function onAssignPlayerId(data) {
+	localPlayer.id = data.pid;
+};
+
+function onPlayersList(data) {
+	players = data.players;
 };
 
 //Keyboard key down
@@ -174,13 +186,15 @@ function onFoundGame(data) {
 };
 
 function displayLoser(loserId) {
-	var loser = playerById(loserId);
+	var loser = playerByIdFromServer(loserId);
+	console.log(loser);
 	
 	if (!loser) {
 		console.log("Loser not found: " + loserId);
+		return;
 	}
 	
-	smoke.signal(remotePlayers.indexOf(loser).getName() + " is the loser!");
+	smoke.signal(loser.id + " is the loser!");
 };
 
 function onGotWaitingStatus(data) {
@@ -228,5 +242,15 @@ function playerById(id) {
 			return remotePlayers[i];
 	};
 
+	return false;
+};
+
+function playerByIdFromServer(id) {
+	var i;
+	for (i = 0; i < players.length; i++) {
+		if (players[i].id == id)
+			return players[i];
+	};
+	
 	return false;
 };

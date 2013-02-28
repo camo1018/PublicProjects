@@ -25,6 +25,7 @@
 		console.log(submissionCount);
 		console.log(players.length);
 		
+
 		if (submissionCount >= players.length) {
 			// We're done.  Display results and end game.
 			console.log("Broadcasting Results");
