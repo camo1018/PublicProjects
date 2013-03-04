@@ -2,6 +2,7 @@
 // Client
  var playerGuess,
 	hasGuessed,
+	everyoneSubmitted,
 	itemName = "";
 	
 	
@@ -12,7 +13,7 @@
 		ctx.fillText = ("Guess the Price!", 50, 50);
 		
 		hasGuessed = false;
-		
+		everyoneSubmitted = false;
 		
 		ctx.fillText = (itemName, 50, 150);
 		
@@ -31,6 +32,8 @@
 	};
 	
 	function Game1OnResults(data) {
+		
+		everyoneSubmitted = true;
 		displayLoser(data.loserId);
 		
 		// End Game
@@ -42,6 +45,7 @@
 			if (guess && !isNaN(number)) {
 				playerGuess = guess;
 				hasGuessed = true;
+				Game1WaitForOthers();
 			}
 			else {
 				Game1AskForInput();
@@ -49,6 +53,13 @@
 		});
 				
 	};
+
+	function Game1WaitForOthers() {
+		if (!everyoneSubmitted) {
+			smoke.signal("Waiting for Others");
+			setTimeout(Game1WaitForOthers, 100);
+		}
+	}
 
 	function Game1WaitForName() {
 		if (itemName == "") {

@@ -7,7 +7,7 @@ var util = require("util"),
 var socket, waitingForPlayers, gameId;
 global.players;
 global.main = this;
-global.PLAYERCOUNT = 2;
+global.PLAYERCOUNT = 4;
 
 var Game1 = require("./minigames/Game1");
 
@@ -83,11 +83,11 @@ function onNewPlayer(data) {
 	newPlayer.id = this.id;
 	this.emit("assign player id", {pid: this.id});
 	
-	this.broadcast.emit("new player", {id: newPlayer.id, name: newPlayer.getName(), threshold: newPlayer.getThreshold()});
+	this.broadcast.emit("new player", {id: newPlayer.id, name: newPlayer.name, threshold: newPlayer.threshold});
 	var i, existingPlayer;
 	for (i = 0; i < players.length; i++) {
 		existingPlayer = players[i];
-		this.emit("new player", {id: existingPlayer.id, name: existingPlayer.getName(), y: existingPlayer.getThreshold()});
+		this.emit("new player", {id: existingPlayer.id, name: existingPlayer.name, y: existingPlayer.threshold});
 	};
 	
 	players.push(newPlayer);

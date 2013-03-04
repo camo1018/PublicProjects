@@ -29,6 +29,7 @@
 		if (submissionCount >= players.length) {
 			// We're done.  Display results and end game.
 			console.log("Broadcasting Results");
+			this.broadcast.emit("game1 results", {loserId: loserId});
 			this.emit("game1 results", {loserId: loserId});
 			// End game
 			

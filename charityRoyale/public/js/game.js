@@ -10,6 +10,7 @@ localPlayer,	// Local player
 remotePlayers,
 players,
 inputEntered,
+name,
 threshold,
 socket,
 isWaiting,
@@ -25,14 +26,26 @@ function init() {
 	isWaiting = true;
 	hasGame = false;
 
-	askForInput();
+	askForName();
 	waitForInput();
 
 
 
 };
 
-function askForInput() {
+function askForName() {
+	smoke.prompt("Enter your name.", function(inputName) {
+		if (inputName) {
+			name = inputName;
+			askForThreshold();
+		}
+		else {
+			askForName();
+		}
+	});
+};			
+
+function askForThreshold() {
 	smoke.prompt("What is the maximum amount of donation you are willing to pay?", function(inputThreshold) {
 		var number = Number(inputThreshold);
 		if (inputThreshold && !isNaN(number)) {
@@ -44,7 +57,7 @@ function askForInput() {
 		}
 
 	});
-}
+};
 
 function waitForInput() {
 	if (!inputEntered)
@@ -194,7 +207,7 @@ function displayLoser(loserId) {
 		return;
 	}
 	
-	smoke.signal(loser.id + " is the loser!");
+	smoke.signal(loser.name + " is the loser!");
 };
 
 function onGotWaitingStatus(data) {
