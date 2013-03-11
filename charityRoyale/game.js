@@ -7,7 +7,7 @@ var util = require("util"),
 var socket, waitingForPlayers, gameId;
 global.players;
 global.main = this;
-global.PLAYERCOUNT = 4;
+global.PLAYERCOUNT = 2;
 
 var Game1 = require("./minigames/Game1");
 
