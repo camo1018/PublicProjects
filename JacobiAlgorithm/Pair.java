@@ -1,3 +1,4 @@
+
 public class Pair {
 
 	public int row;
@@ -6,6 +7,6 @@ public class Pair {
 	public Pair(int r, int c) {
 		row = r;
 		column = c;
-	};
-
+	}
 	
+}
